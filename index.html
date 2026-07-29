@@ -1,32 +1,8 @@
-<script type="module">
-import { RTH_LOAD } from "./RTH.loader.js";
-
-(async function(){
-
-    const pq = await RTH_LOAD("d:/tmp/PQ.hdf");
-    const tmp9 = await RTH_LOAD("9x9.tmp");
-    const albertus = await RTH_LOAD("Albertus.hdf");
-
-    document.getElementById("pq").innerText =
-        pq ? "PQ geladen (80GB chunked)" : "PQ nicht gefunden";
-
-    document.getElementById("tmp").innerText =
-        tmp9 ? "9×9 TMP geladen" : "TMP nicht gefunden";
-
-    document.getElementById("albertus").innerText =
-        albertus ? "Albertus geladen" : "Albertus nicht gefunden";
-
----
-
-# ⭐ **RTH – ID.html (copy‑ready)**  
-**(passt zu deinem ANKER‑Style, aber für RTH optimiert)**
-
-```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>RTH – Identität · iki1uc</title>
+<title>RTH – Runtime Transfer Hub · iki1uc</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
@@ -41,54 +17,43 @@ import { RTH_LOAD } from "./RTH.loader.js";
 
 (async function(){
 
-    const id = {
-        station: "RTH – Runtime Transfer Hub",
-        role: "PQ/TMP/HDF‑Transfer",
-        mode: "active",
-        version: "1.0",
-        capabilities: [
-            "PQ‑Storage‑Load",
-            "TMP‑Matrix‑Read",
-            "HDF‑Chunk‑Sequence",
-            "Albertus‑Extract",
-            "Runtime‑Transfer"
-        ]
-    };
-
-    document.getElementById("id-core").innerText =
-        JSON.stringify(id, null, 2);
-
+    /* PQ / TMP / Albertus laden */
+    const pq = await RTH_LOAD("d:/tmp/PQ.hdf");
+    const tmp9 = await RTH_LOAD("9x9.tmp");
     const albertus = await RTH_LOAD("Albertus.hdf");
 
-    document.getElementById("id-data").innerText =
-        albertus
-            ? "Albertus‑Datensatz gefunden"
-            : "Albertus‑Datensatz nicht gefunden";
+    document.getElementById("pq").innerText =
+        pq ? "PQ geladen (80GB chunked)" : "PQ nicht gefunden";
+
+    document.getElementById("tmp").innerText =
+        tmp9 ? "9×9 TMP geladen" : "TMP nicht gefunden";
+
+    document.getElementById("albertus").innerText =
+        albertus ? "Albertus geladen" : "Albertus nicht gefunden";
 
 })();
+</script>
 
 </head>
 
 <body>
 
-<h1>RTH – Identität · iki1uc</h1>
+<h1>RTH – Runtime Transfer Hub · iki1uc</h1>
 
 <div class="block">
-    <div class="title">RTH‑Core‑Identität</div>
-    <pre id="id-core"></pre>
+    <div class="title">PQ‑Storage</div>
+    <pre id="pq"></pre>
 </div>
 
 <div class="block">
-    <div class="title">Albertus‑Status</div>
-    <pre id="id-data"></pre>
+    <div class="title">TMP‑Matrix (9×9)</div>
+    <pre id="tmp"></pre>
+</div>
+
+<div class="block">
+    <div class="title">Albertus‑Datensatz</div>
+    <pre id="albertus"></pre>
 </div>
 
 </body>
 </html>
-
-})();
-</script>
-
-<pre id="pq"></pre>
-<pre id="tmp"></pre>
-<pre id="albertus"></pre>
