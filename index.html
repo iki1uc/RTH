@@ -2,11 +2,10 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>RTH – Runtime Transfer Hub · iki1uc</title>
+<title>RTH – Dashboard · iki1uc</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
-h1 { color:#0f0; letter-spacing:4px; margin-bottom:30px; }
 .block { background:#111; border:1px solid #333; padding:25px; margin-bottom:30px; border-radius:8px; }
 .title { font-size:22px; color:#6cf; margin-bottom:10px; }
 pre { background:#000; border-left:3px solid #6cf; padding:15px; white-space:pre-wrap; }
@@ -14,22 +13,36 @@ pre { background:#000; border-left:3px solid #6cf; padding:15px; white-space:pre
 
 <script type="module">
 import { RTH_LOAD } from "./RTH.loader.js";
+import { RTH_DASHBOARD } from "./RTH.dashboard.js";
+import { RTH_HDF_VIEW } from "./RTH.hdf.js";
+import { RTH_TMP_MATRIX } from "./RTH.tmp.js";
+import { RTH_PQ_MONITOR } from "./RTH.pq.js";
+import { RTH_ALBERTUS } from "./RTH.albertus.js";
+import { RTH_FUSION } from "./RTH.fusion.js";
 
 (async function(){
 
-    /* PQ / TMP / Albertus laden */
     const pq = await RTH_LOAD("d:/tmp/PQ.hdf");
     const tmp9 = await RTH_LOAD("9x9.tmp");
     const albertus = await RTH_LOAD("Albertus.hdf");
 
-    document.getElementById("pq").innerText =
-        pq ? "PQ geladen (80GB chunked)" : "PQ nicht gefunden";
+    document.getElementById("dashboard").innerText =
+        JSON.stringify(RTH_DASHBOARD(pq, tmp9, albertus), null, 2);
+
+    document.getElementById("hdf").innerText =
+        JSON.stringify(RTH_HDF_VIEW(albertus), null, 2);
 
     document.getElementById("tmp").innerText =
-        tmp9 ? "9×9 TMP geladen" : "TMP nicht gefunden";
+        JSON.stringify(RTH_TMP_MATRIX(tmp9), null, 2);
+
+    document.getElementById("pq").innerText =
+        JSON.stringify(RTH_PQ_MONITOR(pq), null, 2);
 
     document.getElementById("albertus").innerText =
-        albertus ? "Albertus geladen" : "Albertus nicht gefunden";
+        JSON.stringify(RTH_ALBERTUS(albertus), null, 2);
+
+    document.getElementById("fusion").innerText =
+        JSON.stringify(RTH_FUSION(true, true, true), null, 2);
 
 })();
 </script>
@@ -38,21 +51,36 @@ import { RTH_LOAD } from "./RTH.loader.js";
 
 <body>
 
-<h1>RTH – Runtime Transfer Hub · iki1uc</h1>
+<h1>RTH – Dashboard · iki1uc</h1>
 
 <div class="block">
-    <div class="title">PQ‑Storage</div>
-    <pre id="pq"></pre>
+    <div class="title">RTH‑Dashboard</div>
+    <pre id="dashboard"></pre>
 </div>
 
 <div class="block">
-    <div class="title">TMP‑Matrix (9×9)</div>
+    <div class="title">HDF‑Viewer</div>
+    <pre id="hdf"></pre>
+</div>
+
+<div class="block">
+    <div class="title">TMP‑Matrix‑Visualizer</div>
     <pre id="tmp"></pre>
 </div>
 
 <div class="block">
-    <div class="title">Albertus‑Datensatz</div>
+    <div class="title">PQ‑Storage‑Monitor</div>
+    <pre id="pq"></pre>
+</div>
+
+<div class="block">
+    <div class="title">Albertus‑Extractor</div>
     <pre id="albertus"></pre>
+</div>
+
+<div class="block">
+    <div class="title">Fusion TEAM + HH + iki1uc</div>
+    <pre id="fusion"></pre>
 </div>
 
 </body>
