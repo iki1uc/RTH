@@ -1,50 +1,49 @@
 # RTH – Runtime Transfer Hub · iki1uc
 
 ## Zweck
-RTH ist die zentrale Station für große Datenmengen im iki1uc‑System.  
+RTH ist die zentrale Daten‑Transfer‑Station im iki1uc‑System.  
 Sie verbindet PQ‑Storage (80 GB), TMP‑Matrix (9×9.tmp), HDF‑Chunks (6.8 GB)  
 und extrahiert interne Datensätze wie „Albertus“.
 
 RTH ist eine Stabilisationsachse (ANKER‑S01) und dient als:
 
 - PQ‑Loader
-- TMP‑Matrix‑Reader
-- HDF‑Chunk‑Sequencer
+- TMP‑Matrix‑Visualizer
+- HDF‑Viewer
 - Albertus‑Extractor
-- Runtime‑Transfer‑Hub zwischen PQ ↔ TMP ↔ NET ↔ HUB
+- Runtime‑Transfer‑Hub
+- Fusion‑Station für TEAM + HH + iki1uc
 
 ---
 
 ## Module
 
-### PQ‑Storage (d:/tmp)
-Große Datenmengen (bis 80 GB), chunked lesbar über RTH.
+### RTH.loader.js  
+Chunk‑Loader für große Dateien.
 
-### TMP‑Matrix (9×9.tmp)
-TMP‑Grid für schnelle Runtime‑Operationen.
+### RTH.dashboard.js  
+Zentrale Übersicht über alle RTH‑Daten.
 
-### HDF‑Chunks (6.8 GB)
-Segmentierte Datenblöcke, sequenziell ladbar.
+### RTH.hdf.js  
+Viewer für HDF‑Chunks.
 
-### Albertus
-Interner Datensatz innerhalb der HDF‑Chunks.
+### RTH.tmp.js  
+TMP‑Matrix‑Visualizer (9×9).
+
+### RTH.pq.js  
+PQ‑Storage‑Monitor (80 GB).
+
+### RTH.albertus.js  
+Albertus‑Datensatz‑Extractor.
+
+### RTH.fusion.js  
+Fusion‑Status zwischen TEAM, HH und iki1uc.
 
 ---
 
-## RTH Loader
-
-RTH nutzt einen Chunk‑Reader, um große Dateien ohne Speicherüberlauf zu laden:
+## Beispiel
 
 ```js
-export async function RTH_LOAD(path){
-    const response = await fetch(path);
-    if(!response.ok) return null;
-
-    const reader = response.body.getReader();
-    let chunks = [];
-    let done = false;
-
-    while(!done){
-        const {value, done: d} = await reader.read();
-        done = d;
-        if(value) chunks
+const pq = await RTH_LOAD("d:/tmp/PQ.hdf");
+const tmp9 = await RTH_LOAD("9x9.tmp");
+const albertus = await RTH_LOAD("Albertus.hdf");
